@@ -79,7 +79,7 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
 ]
 
-AUTH_USER_MODEL = 'projects.User'
+# AUTH_USER_MODEL = 'projects.User'
 
 CORS_ORIGIN_ALLOW_ALL = True
 
