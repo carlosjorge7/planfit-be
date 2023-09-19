@@ -16,7 +16,45 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from projects.api import CustomTokenObtainPairView, EntrenamientoListCreateView, EntrenamientoRetrieveUpdateDeleteView, PersonalDataListCreateView, PersonalDataRetrieveUpdateDeleteView, PlanListCreateView, PlanRetrieveUpdateDeleteView, UserCreateView, UserRetrieveUpdateDeleteView
+
+from rest_framework_simplejwt.views import TokenRefreshView
+
 urlpatterns = [
-    path('admin/', admin.site.urls),
-     path("", include("projects.urls")),
+    path("admin/", admin.site.urls),
+    path("", include("projects.urls")),
+    path("users/", UserCreateView.as_view(), name="user-create"),
+    path("users/<int:pk>/", UserRetrieveUpdateDeleteView.as_view(), name="user-detail"),
+    path(
+        "entrenamientos/",
+        EntrenamientoListCreateView.as_view(),
+        name="entrenamiento-list",
+    ),
+    path(
+        "entrenamientos/<int:pk>/",
+        EntrenamientoRetrieveUpdateDeleteView.as_view(),
+        name="entrenamiento-detail",
+    ),
+    path(
+        "planes/",
+        PlanListCreateView.as_view(),
+        name="planes-list",
+    ),
+    path(
+        "planes/<int:pk>/",
+        PlanRetrieveUpdateDeleteView.as_view(),
+        name="planes-detail",
+    ),
+    path(
+        "personal-data/",
+        PersonalDataListCreateView.as_view(),
+        name="personal-data-list",
+    ),
+    path(
+        "personal-data/<int:pk>/",
+        PersonalDataRetrieveUpdateDeleteView.as_view(),
+        name="personal-data-detail",
+    ),
+    path("token/", CustomTokenObtainPairView.as_view(), name="token-obtain-pair"),
+    path("token/refresh/", TokenRefreshView.as_view(), name="token-refresh"),
 ]

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Project
+from .models import Project, User, Entrenamiento, Ejercicio, Plan, PersonalData
 
 
 class ProjectSerializer(serializers.ModelSerializer):
@@ -8,3 +8,50 @@ class ProjectSerializer(serializers.ModelSerializer):
         model = Project
         fields = ("id", "title", "description", "technology", "created_at")
         read_only_fields = ("created_at",)
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ("id", "username", "email", "password")
+        extra_kwargs = {"password": {"write_only": True}}
+
+    def create(self, validated_data):
+        validated_data['is_active'] = True
+        user = User.objects.create_user(**validated_data)
+        return user
+
+
+class EntrenamientoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Entrenamiento
+        fields = (
+            "id",
+            "usuario",
+            "title",
+            "description",
+        )
+
+class EjercicioSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Ejercicio
+        fields = (
+            "id",
+            "entrenamiento",
+            "nombre",
+            "repeticiones",
+            "peso",
+            "descanso",
+            "comentarios",
+        )
+
+
+class PlanSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Plan
+        fields = ("id", "usuario", "nombre_entrenamiento", "fecha")
+
+
+class PersonalDataSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PersonalData
+        fields = ("id", "usuario", "peso", "altura", "edad", "objetivo", "genero")
