@@ -3,26 +3,31 @@ from django.contrib.auth.models import AbstractUser, Group, Permission
 
 # Create your models here.
 
+
 class Project(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
     technology = models.CharField(max_length=200)
     created_at = models.DateTimeField(auto_now_add=True)
 
+
 class User(AbstractUser):
     username = models.CharField(max_length=200, unique=True)
     email = models.CharField(max_length=200)
     password = models.CharField(max_length=200)
     # Establece is_active en True por defecto para todos los usuarios
-    is_active = models.BooleanField(default=True) 
-    groups = models.ManyToManyField(Group, related_name='custom_user_set', blank=True)
-    user_permissions = models.ManyToManyField(Permission, related_name='custom_user_set', blank=True)
-    
+    is_active = models.BooleanField(default=True)
+    groups = models.ManyToManyField(Group, related_name="custom_user_set", blank=True)
+    user_permissions = models.ManyToManyField(
+        Permission, related_name="custom_user_set", blank=True
+    )
+
 
 class Entrenamiento(models.Model):
     usuario = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     title = models.CharField(max_length=200)
     description = models.TextField()
+
 
 class Ejercicio(models.Model):
     entrenamiento = models.ForeignKey(

@@ -9,8 +9,9 @@ from .serializers import (
     PlanSerializer,
     PersonalDataSerializer,
 )
-from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework.response import Response
 from rest_framework import status
+from rest_framework_simplejwt.views import TokenObtainPairView
 from django.db.models import Q
 
 
@@ -18,6 +19,7 @@ class ProjectViewSet(viewsets.ModelViewSet):
     queryset = Project.objects.all()
     permission_classes = [permissions.AllowAny]
     serializer_class = ProjectSerializer
+
 
 class UserCreateView(generics.CreateAPIView):
     queryset = User.objects.all()
@@ -77,6 +79,7 @@ class EntrenamientoRetrieveUpdateDeleteView(generics.RetrieveUpdateDestroyAPIVie
     queryset = Entrenamiento.objects.all()
     serializer_class = EntrenamientoSerializer
     permission_classes = (IsAuthenticated,)
+
 
 class EjercicioViewSet(viewsets.ModelViewSet):
     queryset = Ejercicio.objects.all()
