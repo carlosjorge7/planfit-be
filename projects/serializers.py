@@ -9,6 +9,7 @@ class ProjectSerializer(serializers.ModelSerializer):
         fields = ("id", "title", "description", "technology", "created_at")
         read_only_fields = ("created_at",)
 
+
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -16,7 +17,7 @@ class UserSerializer(serializers.ModelSerializer):
         extra_kwargs = {"password": {"write_only": True}}
 
     def create(self, validated_data):
-        validated_data['is_active'] = True
+        validated_data["is_active"] = True
         user = User.objects.create_user(**validated_data)
         return user
 
@@ -28,8 +29,10 @@ class EntrenamientoSerializer(serializers.ModelSerializer):
             "id",
             "usuario",
             "title",
+            "tipo",
             "description",
         )
+
 
 class EjercicioSerializer(serializers.ModelSerializer):
     class Meta:

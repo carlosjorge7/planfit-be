@@ -26,7 +26,8 @@ class User(AbstractUser):
 class Entrenamiento(models.Model):
     usuario = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     title = models.CharField(max_length=200)
-    description = models.TextField()
+    tipo = models.CharField(max_length=200, null=True, blank=True)
+    description = models.CharField(max_length=200, null=True, blank=True)
 
 
 class Ejercicio(models.Model):
