@@ -48,6 +48,8 @@ class Plan(models.Model):
     )
     nombre_entrenamiento = models.CharField(max_length=200, default="")
     fecha = models.CharField(max_length=20)
+    hora_inicio = models.CharField(max_length=20, null=True, blank=True)
+    hora_fin = models.CharField(max_length=20, null=True, blank=True)
 
 
 class PersonalData(models.Model):

@@ -51,7 +51,14 @@ class EjercicioSerializer(serializers.ModelSerializer):
 class PlanSerializer(serializers.ModelSerializer):
     class Meta:
         model = Plan
-        fields = ("id", "usuario", "nombre_entrenamiento", "fecha")
+        fields = (
+            "id",
+            "usuario",
+            "nombre_entrenamiento",
+            "fecha",
+            "hora_inicio",
+            "hora_fin",
+        )
 
 
 class PersonalDataSerializer(serializers.ModelSerializer):
