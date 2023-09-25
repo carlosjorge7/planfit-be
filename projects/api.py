@@ -80,6 +80,18 @@ class EntrenamientoRetrieveUpdateDeleteView(generics.RetrieveUpdateDestroyAPIVie
     serializer_class = EntrenamientoSerializer
     permission_classes = (IsAuthenticated,)
 
+    def perform_destroy(self, instance):
+        # Eliminar todos los ejercicios asociados al entrenamiento
+        Ejercicio.objects.filter(entrenamiento=instance).delete()
+
+        # Eliminar todos los planes asociados al entrenamiento
+        Plan.objects.filter(nombre_entrenamiento=instance.id).delete()
+
+        # Finalmente, eliminar el entrenamiento
+        instance.delete()
+
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
 
 class EjercicioViewSet(viewsets.ModelViewSet):
     queryset = Ejercicio.objects.all()
