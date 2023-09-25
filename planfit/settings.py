@@ -62,8 +62,10 @@ REST_FRAMEWORK = {
 
 SIMPLE_JWT = {
     "AUTH_HEADER_TYPES": ("Bearer",),
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),  # Duración del token de acceso
-    "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=30),  # Duración del refresh token
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=1),  # Duración del token de acceso
+    "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(
+        days=10000
+    ),  # Duración del refresh token
 }
 
 AUTH_USER_MODEL = "projects.User"
