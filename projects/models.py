@@ -38,6 +38,8 @@ class Ejercicio(models.Model):
     nombre = models.CharField(max_length=200)
     repeticiones = models.CharField(max_length=200)
     peso = models.CharField(max_length=200)
+    equipo = models.CharField(max_length=100, null=True, blank=True)
+    one_rm = models.CharField(max_length=20, null=True, blank=True)
     descanso = models.CharField(max_length=20, null=True, blank=True)
     comentarios = models.CharField(max_length=3000, null=True, blank=True)
 

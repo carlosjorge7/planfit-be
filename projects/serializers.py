@@ -43,6 +43,8 @@ class EjercicioSerializer(serializers.ModelSerializer):
             "nombre",
             "repeticiones",
             "peso",
+            "equipo",
+            "one_rm",
             "descanso",
             "comentarios",
         )
