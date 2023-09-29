@@ -27,6 +27,8 @@ from projects.api import (
     PlanRetrieveUpdateDeleteView,
     PersonalDataListCreateView,
     PersonalDataRetrieveUpdateDeleteView,
+    ComidaListCreateView,
+    ComidaDetailView,
 )
 
 from rest_framework_simplejwt.views import TokenRefreshView
@@ -66,6 +68,8 @@ urlpatterns = [
         PersonalDataRetrieveUpdateDeleteView.as_view(),
         name="personal-data-detail",
     ),
+    path("comidas/", ComidaListCreateView.as_view(), name="comida-list-create"),
+    path("comidas/<int:pk>/", ComidaDetailView.as_view(), name="comida-detail"),
     path("token/", CustomTokenObtainPairView.as_view(), name="token-obtain-pair"),
     path("token/refresh/", TokenRefreshView.as_view(), name="token-refresh"),
 ]

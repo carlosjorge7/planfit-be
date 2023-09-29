@@ -1,8 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, Group, Permission
 
-# Create your models here.
-
 
 class User(AbstractUser):
     username = models.CharField(max_length=200, unique=True)
@@ -56,3 +54,18 @@ class PersonalData(models.Model):
     edad = models.CharField(max_length=20, null=True, blank=True)
     objetivo = models.CharField(max_length=250, null=True, blank=True)
     genero = models.CharField(max_length=20, null=True, blank=True)
+
+
+class Comida(models.Model):
+    usuario = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="comidas", null=True
+    )
+    entrenamiento = models.ForeignKey(
+        Entrenamiento, on_delete=models.CASCADE, related_name="comidas", null=True
+    )
+    titulo = models.CharField(max_length=200)
+    turno = models.CharField(max_length=200)  # desayuno, comida, merienda, cena
+    nutrientes = models.CharField(
+        max_length=200, null=True, blank=True
+    )  # carbohidratos, proteinas, lipidos, fibra, lacteos ..
+    descripcion = models.CharField(max_length=200, null=True, blank=True)

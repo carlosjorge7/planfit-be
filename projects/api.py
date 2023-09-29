@@ -1,12 +1,13 @@
-from rest_framework import viewsets, permissions, generics
+from rest_framework import viewsets, generics
 from rest_framework.permissions import IsAuthenticated
-from .models import User, Entrenamiento, Ejercicio, Plan, PersonalData
+from .models import User, Entrenamiento, Ejercicio, Plan, PersonalData, Comida
 from .serializers import (
     UserSerializer,
     EntrenamientoSerializer,
     EjercicioSerializer,
     PlanSerializer,
     PersonalDataSerializer,
+    ComidaSerializer,
 )
 from rest_framework.response import Response
 from rest_framework import status
@@ -14,6 +15,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from django.db.models import Q
 
 
+# USER API
 class UserCreateView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -40,6 +42,7 @@ class CustomTokenObtainPairView(TokenObtainPairView):
         return response
 
 
+# ENTRRENAMIENTO API
 class EntrenamientoListCreateView(generics.ListCreateAPIView):
     serializer_class = EntrenamientoSerializer
     permission_classes = (IsAuthenticated,)
@@ -48,6 +51,7 @@ class EntrenamientoListCreateView(generics.ListCreateAPIView):
         user = self.request.user
         serializer.save(usuario=user)
 
+    # Filtro
     def get_queryset(self):
         user = self.request.user
         queryset = Entrenamiento.objects.filter(usuario=user)
@@ -57,14 +61,11 @@ class EntrenamientoListCreateView(generics.ListCreateAPIView):
         if titles:
             # Divide la cadena de títulos en una lista
             titles_list = titles.split(",")
-
             # Crea una consulta Q OR para filtrar exactamente por una o varias posiciones del array
             queries = Q()
             for title in titles_list:
                 queries |= Q(title=title)
-
             queryset = queryset.filter(queries)
-
         return queryset
 
 
@@ -82,15 +83,16 @@ class EntrenamientoRetrieveUpdateDeleteView(generics.RetrieveUpdateDestroyAPIVie
 
         # Finalmente, eliminar el entrenamiento
         instance.delete()
-
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
+# EJERCICIO API
 class EjercicioViewSet(viewsets.ModelViewSet):
     queryset = Ejercicio.objects.all()
     serializer_class = EjercicioSerializer
     permission_classes = (IsAuthenticated,)
 
+    # List ejercicios by entrenamiento
     def list(self, request, *args, **kwargs):
         entrenamiento_id = self.request.GET.get("entrenamiento")
         if entrenamiento_id:
@@ -111,6 +113,7 @@ class EjercicioViewSet(viewsets.ModelViewSet):
             )
 
 
+# PLAN API
 class PlanListCreateView(generics.ListCreateAPIView):
     queryset = Plan.objects.all()
     serializer_class = PlanSerializer
@@ -132,7 +135,7 @@ class PlanRetrieveUpdateDeleteView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (IsAuthenticated,)
 
 
-# Personal Data
+# DATOS PERSONALES API
 class PersonalDataListCreateView(generics.ListCreateAPIView):
     queryset = PersonalData.objects.all()
     serializer_class = PersonalDataSerializer
@@ -142,7 +145,7 @@ class PersonalDataListCreateView(generics.ListCreateAPIView):
         user = self.request.user
         serializer.save(usuario=user)
 
-    # Get planes by user (No hace falta mandarle el id user: Viaja en el TOKEN)
+    # Get personal data by user (No hace falta mandarle el id user: Viaja en el TOKEN)
     def get_queryset(self):
         user = self.request.user
         return PersonalData.objects.filter(usuario=user)
@@ -151,4 +154,25 @@ class PersonalDataListCreateView(generics.ListCreateAPIView):
 class PersonalDataRetrieveUpdateDeleteView(generics.RetrieveUpdateDestroyAPIView):
     queryset = PersonalData.objects.all()
     serializer_class = PersonalDataSerializer
+    permission_classes = (IsAuthenticated,)
+
+
+# COMIDA API
+class ComidaListCreateView(generics.ListCreateAPIView):
+    queryset = Comida.objects.all()
+    serializer_class = ComidaSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def perform_create(self, serializer):
+        serializer.save(usuario=self.request.user)
+
+    # Get comidas by user (No hace falta mandarle el id user: Viaja en el TOKEN)
+    def get_queryset(self):
+        user = self.request.user
+        return Comida.objects.filter(usuario=user)
+
+
+class ComidaDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Comida.objects.all()
+    serializer_class = ComidaSerializer
     permission_classes = (IsAuthenticated,)

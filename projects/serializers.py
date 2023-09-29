@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import User, Entrenamiento, Ejercicio, Plan, PersonalData
+from .models import User, Entrenamiento, Ejercicio, Plan, PersonalData, Comida
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -60,3 +60,17 @@ class PersonalDataSerializer(serializers.ModelSerializer):
     class Meta:
         model = PersonalData
         fields = ("id", "usuario", "peso", "altura", "edad", "objetivo", "genero")
+
+
+class ComidaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comida
+        fields = (
+            "id",
+            "usuario",
+            "entrenamiento",
+            "titulo",
+            "turno",
+            "nutrientes",
+            "descripcion",
+        )
