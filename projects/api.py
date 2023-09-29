@@ -1,8 +1,7 @@
 from rest_framework import viewsets, permissions, generics
 from rest_framework.permissions import IsAuthenticated
-from .models import Project, User, Entrenamiento, Ejercicio, Plan, PersonalData
+from .models import User, Entrenamiento, Ejercicio, Plan, PersonalData
 from .serializers import (
-    ProjectSerializer,
     UserSerializer,
     EntrenamientoSerializer,
     EjercicioSerializer,
@@ -13,12 +12,6 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework_simplejwt.views import TokenObtainPairView
 from django.db.models import Q
-
-
-class ProjectViewSet(viewsets.ModelViewSet):
-    queryset = Project.objects.all()
-    permission_classes = [permissions.AllowAny]
-    serializer_class = ProjectSerializer
 
 
 class UserCreateView(generics.CreateAPIView):

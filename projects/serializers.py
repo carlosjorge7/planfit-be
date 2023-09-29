@@ -1,13 +1,6 @@
 from rest_framework import serializers
 
-from .models import Project, User, Entrenamiento, Ejercicio, Plan, PersonalData
-
-
-class ProjectSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Project
-        fields = ("id", "title", "description", "technology", "created_at")
-        read_only_fields = ("created_at",)
+from .models import User, Entrenamiento, Ejercicio, Plan, PersonalData
 
 
 class UserSerializer(serializers.ModelSerializer):

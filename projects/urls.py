@@ -1,10 +1,10 @@
 from rest_framework import routers
 
-from .api import ProjectViewSet, EjercicioViewSet
+from .api import EjercicioViewSet
 
 router = routers.DefaultRouter()
 
-router.register("api/projects", ProjectViewSet, "projects")
+
 router.register("ejercicios", EjercicioViewSet, "ejercicios")
 
 
