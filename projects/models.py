@@ -67,6 +67,6 @@ class Comida(models.Model):
     comida = models.CharField(max_length=200, null=True, blank=True)
     merienda = models.CharField(max_length=200, null=True, blank=True)
     cena = models.CharField(max_length=200, null=True, blank=True)
-    nutrientes = models.CharField(
+    notas = models.CharField(
         max_length=200, null=True, blank=True
     )  # carbohidratos, proteinas, lipidos, fibra, lacteos ..

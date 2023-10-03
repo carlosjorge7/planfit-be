@@ -73,5 +73,5 @@ class ComidaSerializer(serializers.ModelSerializer):
             "comida",
             "merienda",
             "cena",
-            "nutrientes",
+            "notas",
         )
