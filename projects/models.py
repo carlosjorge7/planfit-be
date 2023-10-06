@@ -63,10 +63,9 @@ class Comida(models.Model):
     entrenamiento = models.ForeignKey(
         Entrenamiento, on_delete=models.CASCADE, related_name="comidas", null=True
     )
+    nombre = models.CharField(max_length=100, null=True, blank=True)
     desayuno = models.CharField(max_length=200, null=True, blank=True)
     comida = models.CharField(max_length=200, null=True, blank=True)
     merienda = models.CharField(max_length=200, null=True, blank=True)
     cena = models.CharField(max_length=200, null=True, blank=True)
-    notas = models.CharField(
-        max_length=200, null=True, blank=True
-    )  # carbohidratos, proteinas, lipidos, fibra, lacteos ..
+    notas = models.CharField(max_length=200, null=True, blank=True)

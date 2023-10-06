@@ -69,6 +69,7 @@ class ComidaSerializer(serializers.ModelSerializer):
             "id",
             "usuario",
             "entrenamiento",
+            "nombre",
             "desayuno",
             "comida",
             "merienda",
