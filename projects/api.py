@@ -47,7 +47,7 @@ class UserCreateView(generics.ListCreateAPIView):
 class UserRetrieveUpdateDeleteView(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    # permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
 
     def perform_destroy(self, instance):
         # Eliminar también los entrenamientos asociados al usuario
