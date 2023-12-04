@@ -47,7 +47,15 @@ class UserCreateView(generics.ListCreateAPIView):
 class UserRetrieveUpdateDeleteView(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = (IsAuthenticated,)
+    # permission_classes = (IsAuthenticated,)
+
+    def perform_destroy(self, instance):
+        # Eliminar también los entrenamientos asociados al usuario
+        Entrenamiento.objects.filter(usuario=instance).delete()
+
+        # Finalmente, eliminar el usuario
+        instance.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 # Personalizo la clase TokenObtainPairView para que devuelva el id del usuario
