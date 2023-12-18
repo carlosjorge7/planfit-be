@@ -53,7 +53,7 @@ class UserRetrieveUpdateDeleteView(generics.RetrieveUpdateDestroyAPIView):
         # Eliminar también los entrenamientos asociados al usuario
         Entrenamiento.objects.filter(usuario=instance).delete()
 
-        # Finalmente, eliminar el usuario
+        # Finalmente, eliminar el entrenamiento
         instance.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
