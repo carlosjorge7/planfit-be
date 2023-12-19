@@ -31,6 +31,9 @@ from projects.api import (
     ComidaDetailView,
 )
 
+from projects.views import FuentesDeBeberView
+
+
 from rest_framework_simplejwt.views import TokenRefreshView
 
 urlpatterns = [
@@ -72,4 +75,5 @@ urlpatterns = [
     path("comidas/<int:pk>/", ComidaDetailView.as_view(), name="comida-detail"),
     path("token/", CustomTokenObtainPairView.as_view(), name="token-obtain-pair"),
     path("token/refresh/", TokenRefreshView.as_view(), name="token-refresh"),
+    path("fuentes_de_beber/", FuentesDeBeberView.as_view(), name="fuentes_de_beber"),
 ]
